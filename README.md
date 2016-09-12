@@ -31,18 +31,18 @@ Additionally, the project will involve these scripts:
 
 **Day 1**
 
--[ ] configure webpack
--[ ] write skeleton for remaining files
--[ ] re-familiarize myself with Canvas
+- [ ] configure webpack
+- [ ] write skeleton for remaining files
+- [ ] re-familiarize myself with Canvas
 
 **Day 2**
 
--[ ] write code to implement a priority queue for edge cells
--[ ] start writing code to implement Prim's algorithm and generate weighted grid
+- [ ] write code to implement a priority queue for edge cells
+- [ ] start writing code to implement Prim's algorithm and generate weighted grid
 
 **Day 3**
--[ ] finish implementing Prim's algorithm
--[ ] add a listener for user's click
+- [ ] finish implementing Prim's algorithm
+- [ ] add a listener for user's click
 
 ### Bonus
 - slider to change the speed of the animation
