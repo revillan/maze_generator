@@ -24,7 +24,9 @@ This project will use
 Additionally, the project will involve these scripts:
 
 `queue.js`: which will handle the logic of keeping track of edge cells in the grid
+
 `prims.js`: which will execute the logic of prims algorithm
+
 `maze.js`: which will use `Canvas` to render the maze
 
 ### Implementation Timeline
