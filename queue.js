@@ -15,13 +15,14 @@ class MinHeap {
     this.array[1] = this.array[this.heapsize];
     this.heapsize--;
     this.minHeapify(1);
-    return min;
+    return this.heap[min];
   }
 
-  heapInsert(key) {
+  heapInsert(key, value) {
     this.heapsize++;
     this.array[this.heapsize] = 25; //basically infinitely
     this.heapDecreaseKey(this.heapsize, key);
+    this.heap[key] = value;
   }
 
   heapDecreaseKey(i, key) {
@@ -70,3 +71,5 @@ class MinHeap {
     return Math.floor(i/2);
   }
 }
+
+export default MinHeap;

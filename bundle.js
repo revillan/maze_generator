@@ -44,23 +44,40 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	var _queue = __webpack_require__(1);
-	
-	var _queue2 = _interopRequireDefault(_queue);
+	"use strict";
 	
 	var _prims = __webpack_require__(2);
 	
 	var _prims2 = _interopRequireDefault(_prims);
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var floor10 = function floor10(n) {
+	  return Math.floor(n / 10) * 10;
+	}; // render logic, entry file
+	
+	
+	document.addEventListener("DOMContentLoaded", function () {
+	  var canvas = document.getElementById("maze-canvas");
+	  var ctx = canvas.getContext("2d");
+	  canvas.style.backgroundColor = "rgba(0,0,0,1)";
+	
+	  canvas.addEventListener("click", function () {
+	    var rect = canvas.getBoundingClientRect();
+	    ctx.fillStyle = "green";
+	    ctx.fillRect(floor10(event.clientX) - rect.left, floor10(event.clientY) - rect.top, 10, 10);
+	  });
+	});
 
 /***/ },
 /* 1 */
 /***/ function(module, exports) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -87,14 +104,15 @@
 	      this.array[1] = this.array[this.heapsize];
 	      this.heapsize--;
 	      this.minHeapify(1);
-	      return min;
+	      return this.heap[min];
 	    }
 	  }, {
 	    key: "heapInsert",
-	    value: function heapInsert(key) {
+	    value: function heapInsert(key, value) {
 	      this.heapsize++;
 	      this.array[this.heapsize] = 25; //basically infinitely
 	      this.heapDecreaseKey(this.heapsize, key);
+	      this.heap[key] = value;
 	    }
 	  }, {
 	    key: "heapDecreaseKey",
@@ -147,16 +165,102 @@
 	      return Math.floor(i / 2);
 	    }
 	  }]);
-
+	
 	  return MinHeap;
 	}();
+	
+	exports.default = MinHeap;
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// prims algo implementation
 	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // prims algo implementation
+	
+	
+	var _queue = __webpack_require__(1);
+	
+	var _queue2 = _interopRequireDefault(_queue);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var DIRECTIONS = [[0, -1], // N
+	[0, 1], // S
+	[1, 0], // E
+	[-1, 0] // W
+	];
+	
+	var DIR_NAMES = {
+	  0: "N",
+	  1: "S",
+	  2: "E",
+	  3: "W"
+	};
+	
+	var WIDTH = 800;
+	
+	var HEIGHT = 600;
+	
+	var Prims = function () {
+	  function Prims(start, ctx) {
+	    _classCallCheck(this, Prims);
+	
+	    this.maze = {};
+	    this.ctx = ctx;
+	  }
+	
+	  _createClass(Prims, [{
+	    key: "neighbors",
+	    value: function neighbors(location) {
+	      var neighbors = [];
+	      var dx = void 0,
+	          dy = void 0;
+	      for (var i = 0; i < 4; i++) {
+	        dx = DIRECTIONS[i][0];
+	        dy = DIRECTIONS[i][1];
+	        if (location[0] + dx > 0 && location[0] + dx < HEIGHT && location[1] + dy > 0 && location[1] + dy < WIDTH) {
+	          neighbors.push([location[0] + dx, location[1] + dy]);
+	        }
+	      }
+	      return neighbors;
+	    }
+	  }, {
+	    key: "procedure",
+	    value: function procedure(start) {
+	      this.addToMaze(start);
+	      var queue = new _queue2.default();
+	      var rand = void 0;
+	      this.neighbors(start).forEach(function (neighbor) {
+	        // rand = Math.random();2
+	        // queue.heapInsert(rand, {weight: rand, location: neighbor, direction: })
+	        // add neighbor to queue
+	      });
+	      var min = void 0;
+	      while (queue.heapsize > 0) {
+	        min = queue.extractMin();
+	        this.neighbors(min).forEach(function (neighbor) {
+	          // check if neighbor in maze
+	        });
+	        // if neighbors not in maze (except one)
+	        // add min to maze
+	        // add neighbors to queue
+	      }
+	    }
+	  }, {
+	    key: "addToMaze",
+	    value: function addToMaze(location) {
+	      this.maze[location] = true;
+	      this.ctx.fillStyle = "white";
+	      this.ctx.fillRect(location[0], location[1], 10, 10);
+	    }
+	  }]);
+
+	  return Prims;
+	}();
 
 /***/ }
 /******/ ]);
