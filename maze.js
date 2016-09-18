@@ -1,5 +1,6 @@
 // render logic, entry file
 import Prims from './prims';
+import jquery from "jquery";
 
 const floor10 = function (n) {
   return (Math.floor(n / 10) * 10);
@@ -10,12 +11,14 @@ document.addEventListener("DOMContentLoaded", function() {
   let ctx = canvas.getContext("2d");
   canvas.style.backgroundColor = "rgba(0,0,0,1)";
 
-  canvas.addEventListener("click", function() {
+  function makeMaze(e) {
+    e.target.removeEventListener(e.type, makeMaze);
     let rect = canvas.getBoundingClientRect();
-    ctx.fillStyle = "green";
-    ctx.fillRect(floor10(event.clientX) - rect.left,
-                  floor10(event.clientY) - rect.top, 10 , 10);
-    let maze = new Prims([floor10(event.clientX) - rect.left,
-                    floor10(event.clientY) - rect.top], ctx);
-  });
+    let start = [floor10(event.clientX) - rect.left,
+                  floor10(event.clientY) - rect.top];
+    let maze = new Prims(start, ctx);
+    maze.procedure(start);
+  }
+
+  canvas.addEventListener("click", makeMaze);
 });

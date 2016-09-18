@@ -1,10 +1,28 @@
 #maze-canvas {
-    border: 3px solid #AEE5D8;
-    background-color: #000000;
-    display: block;
-    margin: 0 auto;
+  border: 8px solid #AEE5D8;
+  display: block;
+  margin: 0 auto;
+}
+
+* {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+  borer: 0;
 }
 
 body {
   background-color: #E7E5E5;
+}
+
+.instructions {
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 35px;
+  background-color: #AEE5D8;
+  margin-bottom: 15px;
+  padding-top: 5px;
+  /* border: 1px solid black; */
 }

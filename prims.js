@@ -23,7 +23,7 @@ class Prims {
   constructor(start, ctx) {
     this.maze = {};
     this.ctx = ctx;
-    this.procedure(start);
+    // this.procedure(start);
   }
 
   neighbors(location){
