@@ -1,4 +1,3 @@
-// render logic, entry file
 import Prims from './prims';
 import jquery from "jquery";
 
@@ -16,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let rect = canvas.getBoundingClientRect();
     let start = [floor10(event.clientX) - rect.left,
                   floor10(event.clientY) - rect.top];
-    let maze = new Prims(start, ctx);
+    let maze = new Prims(ctx);
     maze.procedure(start);
   }
 

@@ -56,7 +56,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// render logic, entry file
 	var floor10 = function floor10(n) {
 	  return Math.floor(n / 10) * 10;
 	};
@@ -70,7 +69,7 @@
 	    e.target.removeEventListener(e.type, makeMaze);
 	    var rect = canvas.getBoundingClientRect();
 	    var start = [floor10(event.clientX) - rect.left, floor10(event.clientY) - rect.top];
-	    var maze = new _prims2.default(start, ctx);
+	    var maze = new _prims2.default(ctx);
 	    maze.procedure(start);
 	  }
 	
@@ -87,8 +86,7 @@
 	  value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // prims algo implementation
-	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _queue = __webpack_require__(2);
 	
@@ -98,30 +96,18 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var DIRECTIONS = [[0, -10], // N
-	[0, 10], // S
-	[10, 0], // E
-	[-10, 0] // W
-	];
-	
-	var DIR_NAMES = {
-	  0: "N",
-	  1: "S",
-	  2: "E",
-	  3: "W"
-	};
+	var DIRECTIONS = [[0, -10], [0, 10], [10, 0], [-10, 0]];
 	
 	var WIDTH = 600;
 	
 	var HEIGHT = 800;
 	
 	var Prims = function () {
-	  function Prims(start, ctx) {
+	  function Prims(ctx) {
 	    _classCallCheck(this, Prims);
 	
 	    this.maze = {};
 	    this.ctx = ctx;
-	    // this.procedure(start);
 	  }
 	
 	  _createClass(Prims, [{
@@ -140,10 +126,9 @@
 	            opposite: [location[0] + 2 * dx, location[1] + 2 * dy],
 	            weight: Math.random()
 	          });
-	          // console.log([(location[0] + dx), (location[1] + dy)]);
 	        }
 	      }
-	      // console.log(neighbors.length);
+	
 	      return neighbors;
 	    }
 	  }, {
@@ -159,8 +144,6 @@
 	        that.addToQueue(neighbor.target);
 	      });
 	      var current = void 0;
-	      var count = 0;
-	      // while (queue.heapsize > 0 && count < 2000) {
 	      var animate = window.setInterval(function () {
 	        if (queue.heapsize === 0) {
 	          clearTimeout(animate);
@@ -173,15 +156,13 @@
 	          this.maze[current.target] = "PASSAGE";
 	          this.addToMaze(current.target);
 	          neigh = this.neighbors(current.target);
-	          // that = this;
+	
 	          neigh.forEach(function (neighbor) {
 	            queue.heapInsert(neighbor.weight, neighbor);
 	            that.addToQueue(neighbor.target);
 	          });
 	        }
 	      }.bind(this), 1);
-	      count++;
-	      // }
 	    }
 	  }, {
 	    key: "addToMaze",
@@ -211,7 +192,6 @@
 	        dx = DIRECTIONS[i][0];
 	        dy = DIRECTIONS[i][1];
 	        if (location[0] + dx > 0 && location[0] + dx < HEIGHT && location[1] + dy > 0 && location[1] + dy < WIDTH) {
-	
 	          neighbors.push([location[0] + dx, location[1] + dy]);
 	        }
 	      }
@@ -251,8 +231,6 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	// min-heap logic for edge cells
-	
 	var MinHeap = function () {
 	  function MinHeap() {
 	    _classCallCheck(this, MinHeap);
@@ -278,7 +256,7 @@
 	    key: "heapInsert",
 	    value: function heapInsert(key, value) {
 	      this.heapsize++;
-	      this.array[this.heapsize] = 25; //basically infinitely
+	      this.array[this.heapsize] = 25; //basically infinity
 	      this.heapDecreaseKey(this.heapsize, key);
 	      this.heap[key] = value;
 	    }

@@ -1,5 +1,3 @@
-// min-heap logic for edge cells
-
 class MinHeap {
   constructor() {
     this.array = [null];
@@ -20,7 +18,7 @@ class MinHeap {
 
   heapInsert(key, value) {
     this.heapsize++;
-    this.array[this.heapsize] = 25; //basically infinitely
+    this.array[this.heapsize] = 25; //basically infinity
     this.heapDecreaseKey(this.heapsize, key);
     this.heap[key] = value;
   }
