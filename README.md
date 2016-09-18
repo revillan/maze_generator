@@ -6,9 +6,7 @@ This project uses Prim's algorithm to generate a maze on a randomly generated gr
 
 As cells are added to queue they are colored green, and later re-colored black or white depending on whether they are assigned to be wall or passage cells. The live version can be found [here](https://revillan.github.io/maze_generator/).
 
-### Algorithmic Implementation
-
-#### Priority Queue
+### Priority Queue
 
 A min-heap is used as a priority queue to keep track of the order cells should be examined. The min-heap implementation has two public methods that are used by the maze generator:
 
@@ -35,7 +33,7 @@ heapInsert(key, value) {
 }
 ```
 
-#### Prim's algorithm
+### Prim's Algorithm
 
 An arbitrary starting cell for the maze is chosen by the user with a click inside the box. This starting cell is added to the maze. The links between this starting cell and its North, South, East, and West neighbors are assigned a randomly generated weight value and these are neighbors added to the priority queue. Until the priority queue is empty, at each iteration, the cell with the lowest weighted connection to the maze is assigned to be either a "wall" cell (black) or a "passage" cell (white). A cell will be assigned as a "wall" cell if the adding it as a "passage" would cause the maze to reconnect with itself (since Prim's algorithm generates a minimum spanning tree).
 
