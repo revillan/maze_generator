@@ -1,0 +1,10 @@
+#maze-canvas {
+    border: 3px solid #AEE5D8;
+    background-color: #000000;
+    display: block;
+    margin: 0 auto;
+}
+
+body {
+  background-color: #E7E5E5;
+}

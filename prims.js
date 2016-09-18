@@ -36,9 +36,10 @@ class Prims {
         location[0] + dx < HEIGHT &&
         location[1] + dy > 0 &&
         location[1] + dy < WIDTH &&
-        this.maze[(location[0] + dx), (location[1] + dy)] === undefined &&
-        (this.maze[(location[0] + 2*dx), (location[1] + 2*dy)] === "WALL" ||
-          this.maze[(location[0] + 2*dx), (location[1] + 2*dy)] === undefined
+        this.maze[[(location[0] + dx), (location[1] + dy)]] === undefined &&
+        (
+          this.maze[[(location[0] + 2*dx), (location[1] + 2*dy)]] === "WALL" ||
+          this.maze[[(location[0] + 2*dx), (location[1] + 2*dy)]] === undefined
         )
             ){
           neighbors.push( {
@@ -57,114 +58,55 @@ class Prims {
   procedure(start) {
     let queue = new MinHeap;
     this.addToMaze(start);
+    this.maze[start] = "PASSAGE";
     let neigh = this.neighbors(start);
-    neigh.forEach(neighbor => (
-      queue.heapInsert(neighbor.weight, neighbor)
-    ));
+    let that = this;
+    neigh.forEach(neighbor => {
+      queue.heapInsert(neighbor.weight, neighbor);
+      that.addToQueue(neighbor.target);
+    });
     let current;
     let count = 0;
-    while (queue.heapsize > 0 && count < 20000) {
-      // debugger
-      current = queue.extractMin();
-      // if (this.maze[current.opposite] === "PASSAGE") {
-      //   this.maze[current.target] = "WALL";
-      // } else {
-      if (this.maze[current.target] !== undefined) {
-        this.makeInvisible(current.target);
-        continue;
-      }
-        if (this.justNeighbors(current.target)) {
+    // while (queue.heapsize > 0 && count < 2000) {
+      let animate = window.setInterval( function() {
+        if (queue.heapsize === 0) {
+          clearTimeout(animate);
+        }
+        current = queue.extractMin();
+        if ( this.maze[current.opposite] === "PASSAGE" ||
+              this.justNeighbors(current.target)["passages"] >= 2 ||
+              this.justNeighbors(current.target)["walls"] >= 2  ) {
+          this.maze[current.target] = "WALL";
+          this.makeWall(current.target);
+        } else {
+          this.maze[current.target] = "PASSAGE";
           this.addToMaze(current.target);
-          // console.log(current.target);
           neigh = this.neighbors(current.target);
-          // console.log(neigh);
-          let that = this;
+          // that = this;
           neigh.forEach(neighbor => {
             queue.heapInsert(neighbor.weight, neighbor);
             that.addToQueue(neighbor.target);
           });
-        } else {
-          // if (this.maze[current.target] !== undefined) {
-            this.makeWall(current.target);
-          // }
+
         }
-      // }
+      }.bind(this) , 1);
       count++;
-    }
-    console.log(queue.heapsize);
-
-
-    // this.addToMaze(start);
-    // let queue = new MinHeap;
-    // let rand;
-    // this.neighbors(start).forEach(neighbor => {
-    //   rand = Math.random();
-    //   queue.heapInsert(rand, {weight: rand, location: neighbor});
-    //   // add neighbor to queue
-    // });
-    // console.log(queue.heapsize);
-    // let min;
-    // let neigh;
-    // min = queue.extractMin();
-    // neigh = this.neighbors(min.location);
-
+    // }
   }
-    // let min;
-    // let neighCount;
-    // let inn = [];
-    // while (queue.heapsize > 0) {
-    //   min = queue.extractMin();
-    //   // this.addToMaze(min.location);
-    //   // console.log(min.location);
-    //   neighCount = 0;
-    //   this.neighbors(min.location).forEach(neighbor => {
-    //     // check if neighbor in maze
-    //     if (this.maze[neighbor] === undefined) {
-    //       // console.log(neighbor);
-    //       rand = Math.random();
-    //       queue.heapInsert(rand, {weight: rand, location: neighbor});
-    //     } else if (this.maze[neighbor] === 4) {
-    //       neighCount++;
-    //     }
-    //   });
-    //   // if neighbors not in maze (except one)
-    //     // add min to maze
-    //     // add neighbors to queue
-    //   // if (neighCount === 0 || neighCount > 2){
-    //     // console.log(neighCount);
-    //     this.maze[min.location] = true;
-    //     inn.push(min.location);
-    //     // window.setTimeout(() => {this.addToMaze(min.location)}, 10);
-    //   // } else {
-    //   //   console.log(neighCount);
-    //   //   this.maze[location] = 4;
-    //   // }
-    // }
-    // console.log(inn);
-    // for (var i = 0; i < inn.length; i++) {
-    //   console.log(inn[i]);
-    //   window.setTimeout((i) => {this.addToMaze(inn[i])}, 10);
-    // }
-  // }
+
 
   addToMaze(location) {
-    this.maze[location] = "PASSAGE";
-    this.ctx.fillStyle = "white";
+    this.ctx.fillStyle = "#FFFFFF";
     this.ctx.fillRect(location[0], location[1], 10, 10);
   }
 
   addToQueue(location) {
-    // this.ctx.fillStyle = "pink";
-    // this.ctx.fillRect(location[0], location[1], 10, 10);
-  }
-
-  makeWall(location){
-    this.ctx.fillStyle = "black";
+    this.ctx.fillStyle = "#7BE0AD";
     this.ctx.fillRect(location[0], location[1], 10, 10);
   }
 
-  makeInvisible(location) {
-    this.ctx.fillStyle = "transparent";
+  makeWall(location){
+    this.ctx.fillStyle = "#000000";
     this.ctx.fillRect(location[0], location[1], 10, 10);
   }
 
@@ -183,13 +125,20 @@ class Prims {
         }
 
     }
-    let count = 0;
+    let passage = 0;
+    let wall = 0;
     for (var j = 0; j < neighbors.length; j++) {
-      if (this.maze[neighbors[j]] === "PASSAGE") {
-        count++;
+      if (this.maze[  neighbors[j]  ] === "PASSAGE") {
+        passage++;
+      } else if ( this.maze[  neighbors[j]  ] === "WALL") {
+        wall++;
       }
     }
-    return (count <= 1);
+    let counts = {};
+    counts["passages"] = passage;
+    counts["walls"] = wall;
+
+    return counts;
   }
 
 

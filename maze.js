@@ -8,7 +8,7 @@ const floor10 = function (n) {
 document.addEventListener("DOMContentLoaded", function() {
   let canvas = document.getElementById("maze-canvas");
   let ctx = canvas.getContext("2d");
-  canvas.style.backgroundColor = "rgba(0,0,0,0)";
+  canvas.style.backgroundColor = "rgba(0,0,0,1)";
 
   canvas.addEventListener("click", function() {
     let rect = canvas.getBoundingClientRect();
