@@ -61,6 +61,7 @@
 	};
 	
 	document.addEventListener("DOMContentLoaded", function () {
+	  document.getElementById("onLoad").click();
 	  var canvas = document.getElementById("maze-canvas");
 	  var ctx = canvas.getContext("2d");
 	  canvas.style.backgroundColor = "rgba(0,0,0,1)";

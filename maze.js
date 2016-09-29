@@ -6,6 +6,7 @@ const floor10 = function (n) {
 };
 
 document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("onLoad").click();
   let canvas = document.getElementById("maze-canvas");
   let ctx = canvas.getContext("2d");
   canvas.style.backgroundColor = "rgba(0,0,0,1)";

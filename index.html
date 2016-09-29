@@ -11,8 +11,27 @@
   </head>
   <body>
     <div class="instructions">
-      Click below to generate a maze!
+      Visualizing Prim's Algorithm
     </div>
+
+    <button class="explain"><a href="#openModal" id="onLoad">About / Instructions</a></button>
+
+    <div id="openModal" class="modalDialog">
+    	<div >
+    		<a href="#close" title="Close" class="close">X</a>
+        <div class="about">
+
+    		<h2>Generate a Maze!</h2>
+        <br/>
+        <p>Prim's algorithm creates a minimum spanning tree on a weighted graph. Here we use it to generate a maze.</p>
+        <br/>
+        <p>After choosing a starting cell, we add all of the cell's neighbor's to a queue, shown in green. As they are added to the queue
+        , the "link" between the starting cell is assigned a random weight. The maze is then extended to the cell with the lowest weighted connection to the
+        maze. This process continues until the queue is empty. </p>
+    	</div>
+    </div>
+    </div>
+
     <canvas id="maze-canvas" height="610" width="810">
 
 
