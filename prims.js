@@ -57,7 +57,7 @@ class Prims {
     });
     let current;
     let animate = window.setInterval( function() {
-      if (queue.heapsize === 0) {
+      if (queue.heapsize === 1) {
         clearTimeout(animate);
       }
       current = queue.extractMin();

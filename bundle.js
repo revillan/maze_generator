@@ -61,10 +61,12 @@
 	};
 	
 	document.addEventListener("DOMContentLoaded", function () {
+	
 	  Date.prototype.addHours = function (h) {
 	    this.setHours(this.getHours() + h);
 	    return this;
 	  };
+	
 	  var today = new Date();
 	  today.addHours(1);
 	  var UTCstring = today.toUTCString();
@@ -72,18 +74,35 @@
 	    document.cookie = "seen=true;expires=" + today + ";path=/";
 	    document.getElementById("onLoad").click();
 	  }
+	
 	  var canvas = document.getElementById("maze-canvas");
 	  var ctx = canvas.getContext("2d");
 	  canvas.style.backgroundColor = "rgba(0,0,0,1)";
 	
-	  function makeMaze(e) {
-	    e.target.removeEventListener(e.type, makeMaze);
-	    var rect = canvas.getBoundingClientRect();
-	    var start = [floor10(event.clientX) - rect.left, floor10(event.clientY) - rect.top];
+	  function startMaze(start) {
 	    var maze = new _prims2.default(ctx);
 	    maze.procedure(start);
 	  }
 	
+	  function makeMaze(e) {
+	    e.target.removeEventListener(e.type, makeMaze);
+	    randStartButton.removeEventListener("click", randStart);
+	    var rect = canvas.getBoundingClientRect();
+	    var start = [floor10(event.clientX) - rect.left - 10, floor10(event.clientY) - rect.top - 10];
+	    startMaze(start);
+	  }
+	
+	  function randStart(e) {
+	    var x = floor10(Math.random() * 810);
+	    var y = floor10(Math.random() * 610);
+	    var start = [x, y];
+	    canvas.removeEventListener("click", makeMaze);
+	    e.target.removeEventListener(e.type, randStart);
+	    startMaze(start);
+	  }
+	
+	  var randStartButton = document.getElementById("randStart");
+	  randStartButton.addEventListener("click", randStart);
 	  canvas.addEventListener("click", makeMaze);
 	});
 
@@ -156,7 +175,7 @@
 	      });
 	      var current = void 0;
 	      var animate = window.setInterval(function () {
-	        if (queue.heapsize === 0) {
+	        if (queue.heapsize === 1) {
 	          clearTimeout(animate);
 	        }
 	        current = queue.extractMin();

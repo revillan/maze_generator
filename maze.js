@@ -6,10 +6,12 @@ const floor10 = function (n) {
 };
 
 document.addEventListener("DOMContentLoaded", function() {
+
   Date.prototype.addHours = function(h){
     this.setHours(this.getHours()+h);
     return this;
   };
+
   let today = new Date();
   today.addHours(1);
   let UTCstring = today.toUTCString();
@@ -17,18 +19,35 @@ document.addEventListener("DOMContentLoaded", function() {
     document.cookie = `seen=true;expires=${today};path=/`;
     document.getElementById("onLoad").click();
   }
+
   let canvas = document.getElementById("maze-canvas");
   let ctx = canvas.getContext("2d");
   canvas.style.backgroundColor = "rgba(0,0,0,1)";
 
-  function makeMaze(e) {
-    e.target.removeEventListener(e.type, makeMaze);
-    let rect = canvas.getBoundingClientRect();
-    let start = [floor10(event.clientX) - rect.left,
-                  floor10(event.clientY) - rect.top];
+  function startMaze(start) {
     let maze = new Prims(ctx);
     maze.procedure(start);
   }
 
+  function makeMaze(e) {
+    e.target.removeEventListener(e.type, makeMaze);
+    randStartButton.removeEventListener("click", randStart);
+    let rect = canvas.getBoundingClientRect();
+    let start = [floor10(event.clientX) - rect.left - 10,
+                  floor10(event.clientY) - rect.top - 10];
+    startMaze(start);
+  }
+
+  function randStart(e) {
+    let x = floor10(Math.random()*810);
+    let y = floor10(Math.random()*610);
+    let start = [x,y];
+    canvas.removeEventListener("click", makeMaze);
+    e.target.removeEventListener(e.type, randStart);
+    startMaze(start);
+  }
+
+  let randStartButton = document.getElementById("randStart");
+  randStartButton.addEventListener("click", randStart);
   canvas.addEventListener("click", makeMaze);
 });

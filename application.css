@@ -78,7 +78,7 @@ body {
 }
 
 .modalDialog > div {
-	width: 400px;
+	width: 530px;
 	position: relative;
 	margin: 10% auto;
 	padding: 5px 20px 13px 20px;
@@ -91,15 +91,15 @@ body {
     color: #7BE0AD;
     line-height: 25px;
     position: absolute;
-    left: 10px;
+    left: 15px;
     text-align: center;
-    top: 10px;
+    top: 15px;
     width: 24px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 20px;
-    padding: 4px;
-    border-radius: 18px;
+    font-size: 25px;
+    padding: 7px;
+    border-radius: 20px;
 }
 
 .close:hover {
@@ -110,4 +110,16 @@ body {
 .about {
     margin: 35px;
     margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.about > p {
+  display: flex;
+  align-self: center;
+}
+
+/*.break-below {
+  border-bottom: 1px solid #eee;
+}*/
