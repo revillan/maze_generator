@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", function() {
   let today = new Date();
   today.addHours(1);
   let UTCstring = today.toUTCString();
-  if (document.cookie === "") {
-    document.cookie = `seen=true;expires=${today};path=/`;
+  if (document.cookie !== "seen=true") {
+    document.cookie = `seen=true; expires=${today}`;
     document.getElementById("onLoad").click();
   }
 
@@ -33,13 +33,14 @@ document.addEventListener("DOMContentLoaded", function() {
     e.target.removeEventListener(e.type, makeMaze);
     randStartButton.removeEventListener("click", randStart);
     let rect = canvas.getBoundingClientRect();
-    let start = [floor10(event.clientX) - rect.left - 10,
-                  floor10(event.clientY) - rect.top - 10];
+    let start = [floor10(e.clientX) - rect.left - 10,
+                  floor10(e.clientY) - rect.top - 10];
     startMaze(start);
   }
 
   function randStart(e) {
-    let x = floor10(Math.random()*810);
+    let x;
+    x = floor10(Math.random()*810);
     let y = floor10(Math.random()*610);
     let start = [x,y];
     canvas.removeEventListener("click", makeMaze);

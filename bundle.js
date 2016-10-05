@@ -70,8 +70,8 @@
 	  var today = new Date();
 	  today.addHours(1);
 	  var UTCstring = today.toUTCString();
-	  if (document.cookie === "") {
-	    document.cookie = "seen=true;expires=" + today + ";path=/";
+	  if (document.cookie !== "seen=true") {
+	    document.cookie = "seen=true; expires=" + today;
 	    document.getElementById("onLoad").click();
 	  }
 	
@@ -88,12 +88,13 @@
 	    e.target.removeEventListener(e.type, makeMaze);
 	    randStartButton.removeEventListener("click", randStart);
 	    var rect = canvas.getBoundingClientRect();
-	    var start = [floor10(event.clientX) - rect.left - 10, floor10(event.clientY) - rect.top - 10];
+	    var start = [floor10(e.clientX) - rect.left - 10, floor10(e.clientY) - rect.top - 10];
 	    startMaze(start);
 	  }
 	
 	  function randStart(e) {
-	    var x = floor10(Math.random() * 810);
+	    var x = void 0;
+	    x = floor10(Math.random() * 810);
 	    var y = floor10(Math.random() * 610);
 	    var start = [x, y];
 	    canvas.removeEventListener("click", makeMaze);
