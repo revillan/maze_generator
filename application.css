@@ -3,18 +3,31 @@
   border-radius: 2px;
   display: block;
   margin: 0 auto;
+  display: flex;
 }
 
 * {
   font-family: inherit;
   margin: 0;
   padding: 0;
-  borer: 0;
+  border: 0;
+  color: inherit;
+  outline: none;
+  text-decoration: none;
 }
 
 body {
   background-color: #E7E5E5;
   font-family: 'Nunito', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: black;
+}
+
+.container{
+  display: flex;
+  justify-content: space-around;
 }
 
 .instructions {
@@ -26,15 +39,24 @@ body {
   background-color: #AEE5D8;
   margin-bottom: 15px;
   padding-top: 5px;
-  /* border: 1px solid black; */
 }
 
 .explain {
-  /*display: block;
-  float: left;
-  padding: 10px;*/
-  /*margin-left: 5%;
-  margin-top: 5%;*/
+  display: flex;
+  background-color: #fff;
+  justify-content: flex-start;
+  padding: 10px;
+  height: 10%;
+  font-size: 16px;
+  margin: 0 auto;
+  margin-top: 5%;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+.explain:hover {
+  background-color: #AEE5D8;
+  cursor: pointer;
 }
 
 .modalDialog {

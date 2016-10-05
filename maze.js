@@ -6,7 +6,17 @@ const floor10 = function (n) {
 };
 
 document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("onLoad").click();
+  Date.prototype.addHours = function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+  };
+  let today = new Date();
+  today.addHours(1);
+  let UTCstring = today.toUTCString();
+  if (document.cookie === "") {
+    document.cookie = `seen=true;expires=${today};path=/`;
+    document.getElementById("onLoad").click();
+  }
   let canvas = document.getElementById("maze-canvas");
   let ctx = canvas.getContext("2d");
   canvas.style.backgroundColor = "rgba(0,0,0,1)";
