@@ -70,7 +70,6 @@
 	  var today = new Date();
 	  today.addHours(1);
 	  var UTCstring = today.toUTCString();
-	  console.log(UTCstring);
 	  if (document.cookie !== "seen=true") {
 	    document.cookie = "seen=true; expires=" + UTCstring;
 	    document.getElementById("onLoad").click();

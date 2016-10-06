@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
   let today = new Date();
   today.addHours(1);
   let UTCstring = today.toUTCString();
-  console.log(UTCstring);
   if (document.cookie !== "seen=true") {
     document.cookie = `seen=true; expires=${UTCstring}`;
     document.getElementById("onLoad").click();
