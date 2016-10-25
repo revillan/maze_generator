@@ -48,7 +48,13 @@ document.addEventListener("DOMContentLoaded", function() {
     startMaze(start);
   }
 
+  function resetMaze(e) {
+    window.location.reload();
+  }
+
   let randStartButton = document.getElementById("randStart");
+  let mazeReset = document.getElementById("resetMaze");
+  mazeReset.addEventListener("click", resetMaze.bind(this));
   randStartButton.addEventListener("click", randStart);
   canvas.addEventListener("click", makeMaze);
 });
