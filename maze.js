@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", function() {
   let ctx = canvas.getContext("2d");
   canvas.style.backgroundColor = "rgba(0,0,0,1)";
 
-  function startMaze(start) {
+  // function startMaze(start) {
     let maze = new Prims(ctx);
-    maze.procedure(start);
-  }
+    // maze.procedure(start);
+  // }
 
   function makeMaze(e) {
     e.target.removeEventListener(e.type, makeMaze);
@@ -35,26 +35,37 @@ document.addEventListener("DOMContentLoaded", function() {
     let rect = canvas.getBoundingClientRect();
     let start = [floor10(e.clientX) - rect.left - 10,
                   floor10(e.clientY) - rect.top - 10];
-    startMaze(start);
+    // startMaze(start);
+    maze.procedure(start);
   }
 
   function randStart(e) {
     let x;
-    x = floor10(Math.random()*810);
-    let y = floor10(Math.random()*610);
+    x = floor10(Math.random()*610);
+    let y = floor10(Math.random()*810);
     let start = [x,y];
     canvas.removeEventListener("click", makeMaze);
     e.target.removeEventListener(e.type, randStart);
-    startMaze(start);
+    // startMaze(start);
+    maze.procedure(start);
+
   }
 
   function resetMaze(e) {
-    window.location.reload();
+    ctx.fillStyle = "#000000";
+    let rect = canvas.getBoundingClientRect();
+
+    ctx.fillRect(0,
+                  0, 810,810 );
+    randStartButton.addEventListener("click", randStart);
+    canvas.addEventListener("click", makeMaze);
+    maze.reset();
+    randStartButton.addEventListener("click", randStart);
   }
 
   let randStartButton = document.getElementById("randStart");
   let mazeReset = document.getElementById("resetMaze");
-  mazeReset.addEventListener("click", resetMaze.bind(this));
+  mazeReset.addEventListener("click", resetMaze);
   randStartButton.addEventListener("click", randStart);
   canvas.addEventListener("click", makeMaze);
 });

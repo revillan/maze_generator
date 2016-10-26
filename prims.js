@@ -56,9 +56,9 @@ class Prims {
       that.addToQueue(neighbor.target);
     });
     let current;
-    let animate = window.setInterval( function() {
+    this.animate = window.setInterval( function() {
       if (queue.heapsize === 1) {
-        clearTimeout(animate);
+        clearTimeout(this.animate);
       }
       current = queue.extractMin();
       if ( this.maze[current.opposite] === "PASSAGE" ||
@@ -78,6 +78,11 @@ class Prims {
 
       }
     }.bind(this) , 1);
+  }
+
+  reset() {
+    clearTimeout(this.animate);
+    this.maze = {};
   }
 
 

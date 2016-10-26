@@ -79,30 +79,45 @@
 	  var ctx = canvas.getContext("2d");
 	  canvas.style.backgroundColor = "rgba(0,0,0,1)";
 	
-	  function startMaze(start) {
-	    var maze = new _prims2.default(ctx);
-	    maze.procedure(start);
-	  }
+	  // function startMaze(start) {
+	  var maze = new _prims2.default(ctx);
+	  // maze.procedure(start);
+	  // }
 	
 	  function makeMaze(e) {
 	    e.target.removeEventListener(e.type, makeMaze);
 	    randStartButton.removeEventListener("click", randStart);
 	    var rect = canvas.getBoundingClientRect();
 	    var start = [floor10(e.clientX) - rect.left - 10, floor10(e.clientY) - rect.top - 10];
-	    startMaze(start);
+	    // startMaze(start);
+	    maze.procedure(start);
 	  }
 	
 	  function randStart(e) {
 	    var x = void 0;
-	    x = floor10(Math.random() * 810);
-	    var y = floor10(Math.random() * 610);
+	    x = floor10(Math.random() * 610);
+	    var y = floor10(Math.random() * 810);
 	    var start = [x, y];
 	    canvas.removeEventListener("click", makeMaze);
 	    e.target.removeEventListener(e.type, randStart);
-	    startMaze(start);
+	    // startMaze(start);
+	    maze.procedure(start);
+	  }
+	
+	  function resetMaze(e) {
+	    ctx.fillStyle = "#000000";
+	    var rect = canvas.getBoundingClientRect();
+	
+	    ctx.fillRect(0, 0, 810, 810);
+	    randStartButton.addEventListener("click", randStart);
+	    canvas.addEventListener("click", makeMaze);
+	    maze.reset();
+	    randStartButton.addEventListener("click", randStart);
 	  }
 	
 	  var randStartButton = document.getElementById("randStart");
+	  var mazeReset = document.getElementById("resetMaze");
+	  mazeReset.addEventListener("click", resetMaze);
 	  randStartButton.addEventListener("click", randStart);
 	  canvas.addEventListener("click", makeMaze);
 	});
@@ -175,9 +190,9 @@
 	        that.addToQueue(neighbor.target);
 	      });
 	      var current = void 0;
-	      var animate = window.setInterval(function () {
+	      this.animate = window.setInterval(function () {
 	        if (queue.heapsize === 1) {
-	          clearTimeout(animate);
+	          clearTimeout(this.animate);
 	        }
 	        current = queue.extractMin();
 	        if (this.maze[current.opposite] === "PASSAGE" || this.justNeighbors(current.target)["passages"] >= 2 || this.justNeighbors(current.target)["walls"] >= 2) {
@@ -194,6 +209,12 @@
 	          });
 	        }
 	      }.bind(this), 1);
+	    }
+	  }, {
+	    key: "reset",
+	    value: function reset() {
+	      clearTimeout(this.animate);
+	      this.maze = {};
 	    }
 	  }, {
 	    key: "addToMaze",
