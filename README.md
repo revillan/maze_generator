@@ -1,10 +1,10 @@
 ## Prim's Maze Generator
 
-This project uses Prim's algorithm to generate a maze on a randomly generated grid graph.
+This project uses Prim's algorithm to generate a maze on a randomly generated grid graph. The live version can be found at [reillyvillanueva.com/maze_generator](https://reillyvillanueva.com/maze_generator/).
 
 ![maze_in_progress](./maze_in_progress.png)
 
-As cells are added to queue they are colored green, and later re-colored black or white depending on whether they are assigned to be wall or passage cells. The live version can be found [here](https://revillan.github.io/maze_generator/).
+As cells are added to queue they are colored green, and later re-colored black or white depending on whether they are assigned to be wall or passage cells.
 
 ### Priority Queue
 

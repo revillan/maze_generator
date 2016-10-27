@@ -55,12 +55,10 @@ document.addEventListener("DOMContentLoaded", function() {
     ctx.fillStyle = "#000000";
     let rect = canvas.getBoundingClientRect();
 
-    ctx.fillRect(0,
-                  0, 810,810 );
-    randStartButton.addEventListener("click", randStart);
-    canvas.addEventListener("click", makeMaze);
+    ctx.fillRect(0, 0, 810,810 );
     maze.reset();
     randStartButton.addEventListener("click", randStart);
+    canvas.addEventListener("click", makeMaze);
   }
 
   let randStartButton = document.getElementById("randStart");
