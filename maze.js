@@ -24,10 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let ctx = canvas.getContext("2d");
   canvas.style.backgroundColor = "rgba(0,0,0,1)";
 
-  // function startMaze(start) {
-    let maze = new Prims(ctx);
-    // maze.procedure(start);
-  // }
+  let maze = new Prims(ctx);
 
   function makeMaze(e) {
     e.target.removeEventListener(e.type, makeMaze);
@@ -35,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function() {
     let rect = canvas.getBoundingClientRect();
     let start = [floor10(e.clientX) - rect.left - 10,
                   floor10(e.clientY) - rect.top - 10];
-    // startMaze(start);
     maze.procedure(start);
   }
 
@@ -46,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function() {
     let start = [x,y];
     canvas.removeEventListener("click", makeMaze);
     e.target.removeEventListener(e.type, randStart);
-    // startMaze(start);
     maze.procedure(start);
 
   }
